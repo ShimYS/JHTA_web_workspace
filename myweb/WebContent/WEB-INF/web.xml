@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+  version="4.0"
+  metadata-complete="true">
+  
+  <context-param>
+  	<param-name>maxUploadFileSize</param-name>
+  	<param-value>104857600</param-value>
+  </context-param>
+  
+  <context-param>
+  	<param-name>maxUploadFileCount</param-name>
+  	<param-value>10</param-value>
+  </context-param>
+  
+  <context-param>
+  	<param-name>saveDirectory</param-name>
+  	<param-value>c:/files</param-value>
+  </context-param>
+  
+	<!-- 
+	<servlet> 태그는 사용자정의 서블릿 클래스를 Tomcat에 지정된 이름으로                                
+	배포할 때 사용된다. 
+	
+	<servlet-mapping> 태그는 지정된 URL 요청이 왔을 때 사용할 서블릿의 이름을
+	Tomcat에게 알려줄 때 사용된다.
+	
+	아래의 예를 살펴보면..
+		com.sample.download.FileDownloadServlet를 filedownload라는 이름으로 톰캣에 배포한다.
+		/download URL 요청이 접수되면 filedownload라는 이름으로 배포된 서블릿을 사용하도록 한다.
+ 	-->
+  <servlet>
+  	<servlet-name>filedownload</servlet-name>
+  	<servlet-class>com.sample.download.FileDownloadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>filedownload</servlet-name>
+  	<url-pattern>/download</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!-- 
+  	에러페이지 설정
+  	500번대의 에러가 발생시 serverError.jsp에 지정된 에러페이지가 표시된다.
+   -->
+   
+   <!-- 
+   	HTTP 응답코드 500
+   		클라이언트의 요청을 처리하는 도중 에러가 발생한 경우
+   		jsp나 Dao, Service등의 서버측 프로그램이 실행된ㄴ 도중 에러가 발생한 경우
+   		이클립스의 콘솔창을 봐야한다.
+    -->
+   <error-page>
+   	<error-code>500</error-code>
+   	<location>/error/serverError.jsp</location>
+   </error-page>
+   
+   <!-- 
+   	HTTP 응답코드 404
+   		요청URL을 올바르지 않거나, 요청URL에 해당하는 파일을 찾을 수 없는 경우
+   		클라이언트측에서 주소를 잘못입력한 경우
+   		http연결을 체크해야한다.
+    -->
+   <error-page>
+   	<error-code>404</error-code>
+   	<location>/error/filenotfound.jsp</location>
+   </error-page>
+  
+</web-app>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

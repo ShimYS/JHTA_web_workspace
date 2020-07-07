@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	div {
+		width: 200px;
+		background-color: black;
+		color: white;
+		font-weight: bolder;
+		padding: 16px; 
+		margin-left: -180px;
+		transition : margin 0.3s;
+	}
+	li {
+		width: 70px;
+		cursor: pointer;
+	}
+</style>
+</head>
+<body>
+	<h1>이벤트 버블링</h1>
+	
+	<div id="menu-box" onclick="toggleMenu()">
+		<h3>메뉴</h3>
+		<ul>
+			<li onclick="viewContent(event, '국내도서')">국내도서</li>
+			<li onclick="viewContent(event, '해외도서')">해외도서</li>
+			<li onclick="viewContent(event, '음반')">음반</li>
+			<li onclick="viewContent(event, '영화')">영화</li>
+		</ul>
+	</div>
+	
+	<script type="text/javascript">
+		var menuBoxVisible = false;	
+	
+		function toggleMenu() {
+			var box = document.getElementById("menu-box");
+			if(menuBoxVisible){			
+				box.style.marginLeft = "-180px";
+				menuBoxVisible = false;
+			} else {
+				box.style.marginLeft = "-10px";
+				menuBoxVisible = true;
+			}
+			
+		}
+		
+		function viewContent(event, category) {
+			// 일반적으로 click이벤트 발생시 부모(li -> ul > div)로 전파가 된다.
+			// 부모로의 이벤트 전파를 막기위한 처리가 필요한 이유
+			event.stopPropagation();
+			
+			alert(category + " 컨텐츠를 표시합니다.");
+			
+		}
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	#thumbnail-box img {opacity: 0.3;}
+	#thumbnail-box img:hover {opacity: 0.6;}
+</style>
+</head>
+<body>
+	<h1>특정 이벤트 관련 기본동작 실행의 방해</h1>
+	<div id="gallary-box">
+		<img id="gallary" alt="" src="images/1.jpg" width="380" height="380" />
+	</div>
+	<div id="thumbnail-box">
+		<a href="images/1.jpg" onclick="changeImage(event)"><img  src="images/1.jpg" width="120" height="120" /></a>
+		<a href="images/2.jpg" onclick="changeImage(event)"><img  src="images/2.jpg" width="120" height="120" /></a>
+		<a href="images/3.jpg" onclick="changeImage(event)"><img  src="images/3.jpg" width="120" height="120" /></a>
+		<a href="images/4.jpg" onclick="changeImage(event)"><img  src="images/4.jpg" width="120" height="120" /></a>
+		<a href="images/5.jpg" onclick="changeImage(event)"><img  src="images/5.jpg" width="120" height="120" /></a>
+		<a href="images/6.jpg" onclick="changeImage(event)"><img  src="images/6.jpg" width="120" height="120" /></a>
+	</div>
+	<script type="text/javascript">
+		/*
+			img를 클릭하면 클릭이벤트가 발생하고, 이벤트객체가 생성된다.
+			img에는 클릭이벤트관련 이벤트핸들러함수가 등록되어 있지 않기 때문에
+			이벤트(이벤트객체)객체가 부모로 전달된다.
+			a태그는 img로부터 클릭이벤트(이벤트객체)를 전달받는다.
+			a태그에 등록된 클릭이벤트 관련 changeImage(event)가 실행된다.
+			changeImage(event)의 event에는 img에서 발생한 이벤트객체가 전달된다.
+			따라서, event.target는 img태그를 가르킨다.
+		*/
+		function changeImage(event) {
+			// a태그는 클릭이벤트가 발생하면 href에 지정된 페이지 자원으로 이동한다.
+			// event.preventDefault()는 a태그에서 클릭이벤트가 발생했을 때
+			// 지정된 페이지로 이동하는 것을 방해한다.
+			event.preventDefault();
+			
+			var imagePath = event.target.getAttribute("src");
+			document.getElementById("gallary").setAttribute("src", imagePath);
+		}
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

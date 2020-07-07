@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>논리 연산자 사용하기</h1>
+
+	<script type="text/javascript">
+		
+        var grade = '';
+        var orderPrice = 1000000;
+        
+        var result1 = (grade != '' || orderPrice > 500000);
+        var result2 = (grade || orderPrice > 500000);
+        
+        console.log("결과1", result1);	// true
+        console.log("결과2", result2);	// true
+	
+		
+        grade = 'VIP';
+        
+        var result1 = (grade != '' || orderPrice > 500000);
+        var result2 = (grade || orderPrice > 500000);
+        
+        console.log("결과1", result1);	// true
+        console.log("결과2", result2);	// VIP
+	
+		
+        if(grade != '' || orderPrice > 500000){
+        	console.log("사은품을 지급하세요1.")
+        }
+        
+        if(grade || orderPrice > 500000){
+        	console.log("사은품을 지급하세요2.")
+        }
+        
+        if(''){
+        	console.log("값이 있음")
+        } else {
+        	console.log("값이 없음")
+        }
+        
+        
+        grade = '';
+        orderPrice = 300000;
+        
+        if(grade != '' || orderPrice > 500000){
+        	console.log("사은품을 지급하세요1.")
+        } else {
+        	console.log("사은품 지급대상이 아닙니다1.")
+        }
+        
+        if(grade || orderPrice > 500000){
+        	console.log("사은품을 지급하세요2.")
+        } else {
+        	console.log("사은품 지급대상이 아닙니다2.")
+        }
+        
+        
+		/*
+			!!0 		- false
+			!!'' 		- false
+			!!undefined - false
+			!!null 		- false
+			!!NaN 		- false
+			
+			
+			!!'    ' 	- true (길이가 0이 아닌 문자는 참이다)
+		*/
+		 
+	</script>
+</body>
+</html>
