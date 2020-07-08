@@ -45,15 +45,13 @@ public class TodoService {
 	}
 
 	public Map<String, Object> getTodoList(String id, int pageNo, int rows, String status, String keyword)  throws Exception {
-		// 일정 갯수 조회하기(페이지네이션을 위함)
-		System.out.println("id:"+id);
-		System.out.println("status:"+status);
-		System.out.println("keyword:"+keyword);
+		// 조건에 맞는 객체의 갯수를 조회한다.
 		int totalRows = todoDao.getTotalRows(id, status, keyword);
-		System.out.println("totalRows"+totalRows);
+		
 		// 페이지 내비게이션에 필요한 정보 생성하기
 		// 현재 페이지번호, 화면에 표시할 행의 갯수, 전체 데이터의 갯수가 필요함
 		Pagination pagination = new Pagination(pageNo, rows, totalRows);
+		
 		// 현재 페이지번호에 해당하는 데이터 조회에 필요한 구간 계산하기
 		int beginIndex = (pageNo - 1)*rows + 1;
 		int endIndex = pageNo * rows;
@@ -61,10 +59,12 @@ public class TodoService {
 		// 조회조건을 만족하는 일정 조회하기
 		List<TodoDto> todoDtos = todoDao.getTodos(id, status, keyword, beginIndex, endIndex);
 		
+		// 맵객체에 todo값과 pagination값을 따로 담는다.
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("todos", todoDtos);
 		map.put("pagination", pagination);
 		
+		// 값을 컨트롤로러 전달한다.
 		return map;
 	}
 	

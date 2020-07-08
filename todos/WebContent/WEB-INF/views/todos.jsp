@@ -14,7 +14,11 @@
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+<fmt:bundle basename="com.simple.resources.message">
 <div class="container">
+	<!-- 해당 페이지에서 사용할 포지션 값 설정 -->
+	<c:set var="position" value="todos"/>
+	<!-- 네비바  -->
 	<%@ include file="nav.jsp" %>
 	
 	<!-- Content -->
@@ -41,7 +45,7 @@
 								<option value="처리예정" ${param.status eq '처리예정' ? 'selected' : '' }> 처리예정</option>
 								<option value="처리중" ${param.status eq '처리중' ? 'selected' : '' }> 처리중</option>
 								<option value="보류" ${param.status eq '보류' ? 'selected' : '' }> 보류</option>
-								<option value="삭제" ${param.status eq '삭제' ? 'selected' : '' }> 삭제</option>
+								<option value="취소" ${param.status eq '취소' ? 'selected' : '' }> 취소</option>
 								<option value="처리완료" ${param.status eq '처리완료' ? 'selected' : '' }> 처리완료</option>
 							</select>
 						</div>
@@ -166,14 +170,14 @@
 			event.preventDefault(); // <a>태그 클릭한 경우만 event만 event가 있다. (페이지이동 방지를 위해 event객체를 가져오는 것)
 		}
 		// <form>안의 <input type="hidden" name="pageNo" />의 값을 설정한다.
-		// 페이지번호를 클릭한 경유만 1이 아닌 다른 값이 들어간다.
+		// 페이지번호를 클릭한 경우만 1이 아닌 다른 값이 들어간다.
 		document.querySelector("input[name=pageNo]").value = pageNo;
 		
-		// <form>안의 row, status, ketword, pageNo 입력요소의 값을 서버로 제출한다.
+		// <form>안의 row, status, keyword, pageNo 입력요소의 값을 서버로 제출한다.
 		document.getElementById("list-form").submit();
 	}
 </script>
-
+</fmt:bundle>
 </body>
 </html>
 

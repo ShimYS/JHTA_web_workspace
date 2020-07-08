@@ -79,29 +79,30 @@ public class HomeController {
 	@RequestMapping("/list.hta")
 	public ModelAndView list(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("todos.jsp");
 		
+		// 로그인 여부 확인을 위해 세션객체의 유저정보를 조회한다.
 		HttpSession session = req.getSession();
 		User user = (User)session.getAttribute("loginUser");
-				
+		
+		// 폼에서 입력된 값을 조회한다.
 		int pageNo = NumberUtil.stringToInt(req.getParameter("pageNo"), 1);
 		int rows = NumberUtil.stringToInt(req.getParameter("rows"), 5);
 		String status = StringUtil.nullToValue(req.getParameter("status"), "전체");
 		String keyword = StringUtil.nullToBlank(req.getParameter("keyword"));
 		
-		System.out.println("id:"+user.getId());
-		System.out.println(pageNo);
-		System.out.println(rows);
-		System.out.println(status);
-		System.out.println(keyword);
-		System.out.println("keyword: "+keyword);
+		// 위에서 조회한 값을 서비스 로직으로 전달한다.
 		Map<String, Object> map = service.getTodoList(user.getId(), pageNo, rows, status, keyword);
+		
+		// 로직에 의해 조회횐 값을 받는다.
 		Pagination pagination = (Pagination) map.get("pagination");
 		List<TodoDto> todos = (List<TodoDto>) map.get("todos"); 
 		
+		// 값을 mav에 담고, 이동할 url을 설정한다.
 		mav.addAttribute("todos", todos);
 		mav.addAttribute("pagination", pagination);
+		mav.setViewName("todos.jsp");
 		
+		// 설정한 url로 mav를 보낸다.
 		return mav;
 	}
 }

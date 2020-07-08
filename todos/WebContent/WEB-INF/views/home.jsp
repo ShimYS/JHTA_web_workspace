@@ -14,13 +14,18 @@
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+<fmt:bundle basename="com.simple.resources.message">
 <div class="container">
+	<!-- 해당 페이지에서 사용할 포지션 값 설정 -->
+	<c:set var="position" value="home"/>
+	<!-- 네비바  -->
 	<%@ include file="nav.jsp" %>
+	
 	<!-- Content -->
 	<div class="row mb-3">
 		<div class="col-12">
 			<div class="card">
-				<div class="card-header">전체 일정</div>
+				<div class="card-header"><fmt:message key="home.title" /></div>
 				<div class="card-body">
 					<div class="row">
 						
@@ -37,7 +42,9 @@
 												<small>${todo.content }</small>
 											</div>
 											<div class="col-3">
-												<button type="button" class="btn btn-outline-secondary btn-sm" onclick="openTodoDetailModal(${todo.no})">상세</button>
+												<button type="button" class="btn btn-outline-secondary btn-sm" onclick="openTodoDetailModal(${todo.no})">
+													<fmt:message key="button.label.detail" />
+												</button>
 											</div>
 										</div>
 										<div class="d-flex justify-content-between">
@@ -52,7 +59,9 @@
 					</div>
 					<div class="row">
 						<div class="col-12 text-center">
-							<button class="btn btn-outline-dark btn" onclick="showMoreTodo(${param.pagenum })" id="show-more-todo"> 더보기 </button>
+							<button class="btn btn-outline-dark btn" onclick="showMoreTodo(${param.pagenum })" id="show-more-todo">
+								<fmt:message key="button.label.more" />
+							</button>
 						</div>
 					</div>
 				</div>
@@ -120,6 +129,7 @@
 	
 	<%@ include file="footer.jsp" %>
 </div>
+</fmt:bundle>
 <script type="text/javascript">
 	// 상세보기를 누르면 상세보기정보가 있는 모달창을 실행시켜주는 함수
 	function openTodoDetailModal(todoNo) {
