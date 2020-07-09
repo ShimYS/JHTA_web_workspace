@@ -1,7 +1,6 @@
 package com.simple.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +13,13 @@ import com.simple.util.QueryUtil;
 import com.simple.vo.Todo;
 
 public class TodoDao {
+	
+	// 싱글턴 객체
+	private static TodoDao self = new TodoDao(); // 정적변수 self에 TodoDao객체를 담아둔다. (static이 없으면 객체마다 생성하게 된다. 따라서 뀩 설쟁해야함)
+	private TodoDao() {} // 생성자의 외부 접근을 차단한다.
+	public static TodoDao getInstance() {
+		return self;
+	}
 	
 	private TodoDto resultSetToTodos(ResultSet rs) throws Exception {
 		TodoDto todoDto = new TodoDto();
