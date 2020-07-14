@@ -73,6 +73,18 @@
 			
 			$tbody.append(content);
 		});
+		// 단순배열을 다루는 each의 콜백함수 내부에서 this에는 
+		// 배열의 각 요소가 순서대로 전달된다.
+		$.each(students, function() {
+			var content = "<tr>";
+			content += "<td>"+this.no+"</td>";
+			content += "<td>"+this.name+"</td>";
+			content += "<td>"+this.dept+"</td>";
+			content += "<td>"+this.grade+"</td>";
+			content += "</tr>";
+			
+			$tbody.append(content);
+		});
 	</script>
 </body>
 </html>
