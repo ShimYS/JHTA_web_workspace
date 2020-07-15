@@ -64,12 +64,12 @@
 		];
 		var $tbody = $("#student-list");
 		$.each(students, function(index, stud) {
-			var content = "<tr>";
-			content += "<td>"+stud.no+"</td>";
-			content += "<td>"+stud.name+"</td>";
-			content += "<td>"+stud.dept+"</td>";
-			content += "<td>"+stud.grade+"</td>";
-			content += "</tr>";
+			var content = `<tr>
+			<td>${stud.no}</td>
+			<td>${stud.name}</td>
+			<td>${stud.dept}</td>
+			<td>${stud.grade}</td>
+			</tr>`;
 			
 			$tbody.append(content);
 		});
