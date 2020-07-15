@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	div.content {
+		margin-bottom: 15px;
+		border: 1px solid #bbb;
+		padding: 10px;
+	}
+	div.content.highlight {
+		border: 2px solid royalblue;
+	}
+</style>
+</head>
+<body>
+	<h1>클래스 조작하기</h1>
+
+	<div class="box">
+		<div class="content">
+			<h3>프리미엄 요금제</h3>
+			<div class="description">
+				<h4>요금제 내용</h4>
+				<ul>
+					<li>이용요금 : 100,000원</li>
+					<li>부가서비스 : 무료영화, 무료와이파이, 무료쿠폰</li>
+					<li>제공통신사 : KT, LG, SK</li>
+					<li>약정기간 : 10년</li>
+				</ul>
+			</div>
+		</div>
+		<div class="content">
+			<h3>슈퍼 프리미엄 요금제</h3>
+			<div class="description">
+				<h4>요금제 내용</h4>
+				<ul>
+					<li>이용요금 : 200,000원</li>
+					<li>부가서비스 : 무료영화, 무료와이파이, 무료쿠폰, 무료 해외여행</li>
+					<li>제공통신사 : KT, LG, SK</li>
+					<li>약정기간 : 10년</li>
+				</ul>
+			</div>
+		</div>
+		<div class="content">
+			<h3>VVIP 슈퍼 프리미엄 요금제</h3>
+			<div class="description">
+				<h4>요금제 내용</h4>
+				<ul>
+					<li>이용요금 : 600,000원</li>
+					<li>부가서비스 : 무료영화, 무료와이파이, 무료쿠폰, 무료 해외여행, 무료 항공권, 골프 회원권</li>
+					<li>제공통신사 : KT, LG, SK</li>
+					<li>약정기간 : 10년</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+	<script type="text/javascript" src="../resources/js/jquery/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".box .content").click(function () {
+				// 방법1
+				// 모든 컨텐츠 div에서 highlight를 삭제하고, 클릭한 엘리먼트에만 highlight를 추가한다.
+				//$(".box .content").removeClass('highlight');
+				//$(this).addClass('highlight');
+				
+
+				// 방법2 (추천)
+				// 클릭한 엘리먼트에 highlight를 추가하고, 그 형제들을 찾아서 highlight를 삭제한다.
+				//$(this).addClass('highlight').siblings().removeClass('highlight');
+				
+
+				// 방법3 (비추천)
+				// 모든 컨텐츠 div를 찾아서 highlight클래스를 가졌는지 확인하고,
+				// highlight 클래스를 가지오 있으면 해당 엘리먼트에서 highlight를 삭제한다.highlight
+				// 클릭한 엘리먼트에 highlight를 추가한다.
+				$('.box .content').each(function (index, el) {
+					if($(el).hasClass('highlight')){
+						$(el).removeClass('highlight');
+					}
+				});
+				$(this).addClass('highlight');
+			});
+		});
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

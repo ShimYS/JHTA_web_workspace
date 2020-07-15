@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>자식/자손 엘리먼트 검색하기</h1>
+
+    <div class="box">
+        <h3>요금제 목록</h3>
+        <div class="item">
+            <h4>일반 요금제</h4>
+            <div class="summary">
+                <p>일반요금제 입니다</p>
+                <p>일반요금제 입니다</p>
+            </div>
+        </div>
+        <div class="item">
+            <h4>골드 요금제</h4>
+            <div class="summary">
+                <p>골드요금제 입니다</p>
+                <p>골드요금제 입니다</p>
+            </div>
+        </div>
+        <div class="item">
+            <h4>프리미엄 요금제</h4>
+            <div class="summary">
+                <p>프리미엄요금제 입니다</p>
+                <p>프리미엄요금제 입니다</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../resources/js/jquery/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+            //$('.box').children().each(function (index, el) {
+            //console.log('.box의 모든 자식', el); // h3과 div 3개가 출력된다.
+            //});
+            
+            // .children(선택자)의 자식 엘리먼트를 검색한다.
+            // 선택자표현식이 있으면 선택자 표현식에 해당하는 자식엘리먼트만 검색한다.
+            $('.box').children('div').each(function (index, el) {
+            console.log('.box의 자식 중 div들', el); // div가 3개 출력된다.
+            });
+            
+            // .children(선택자)는 자식이 아닌 자손엘리먼트는 검색할 수 없다.
+            //$('.box').children('h4').each(function (index, el) {
+            //console.log('.box의 자손중 h4', el); // 출력내용 없음
+            //});
+            
+            // .find(선택자)는 자식 및 자손 중에서 선택자에 해당하는 
+            // 모든 엘리먼트를 검색한다.
+            // div.item과 div.summary가 모두 검색된다.
+            $('.box').find('div').css('border', '3px dotted red');
+
+            // .find(선택자)는 아주 깊숙한 위치에 있는 자손도 검색할 수 있다.
+            $('.box').find('p').css({'color':'orange', 'font-weight':'bolder'});
+		});
+	</script>
+</body>
+</html>

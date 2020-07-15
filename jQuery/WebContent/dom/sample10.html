@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	div.content {
+		margin-bottom: 15px;
+		border: 1px solid #bbb;
+		padding: 10px;
+	}
+	div.content.highlight {
+		border: 2px solid royalblue;
+	}
+</style>
+</head>
+<body>
+	<h1>조상엘리먼트 조작하기</h1>
+
+	<div class="box">
+		<div class="content" id="item-100">
+			<h3>프리미엄 요금제<button data-item-no="100">선택</button></h3>
+			<div class="description">
+				<h4>요금제 내용</h4>
+				<ul>
+					<li>이용요금 : 100,000원</li>
+					<li>부가서비스 : 무료영화, 무료와이파이, 무료쿠폰</li>
+					<li>제공통신사 : KT, LG, SK</li>
+					<li>약정기간 : 10년</li>
+				</ul>
+			</div>
+		</div>
+		<div class="content" id="item-200">
+			<h3>슈퍼 프리미엄 요금제<button data-item-no="200">선택</button></h3>
+			<div class="description">
+				<h4>요금제 내용</h4>
+				<ul>
+					<li>이용요금 : 200,000원</li>
+					<li>부가서비스 : 무료영화, 무료와이파이, 무료쿠폰, 무료 해외여행</li>
+					<li>제공통신사 : KT, LG, SK</li>
+					<li>약정기간 : 10년</li>
+				</ul>
+			</div>
+		</div>
+		<div class="content" id="item-300">
+			<h3>VVIP 슈퍼 프리미엄 요금제<button data-item-no="300">선택</button></h3>
+			<div class="description">
+				<h4>요금제 내용</h4>
+				<ul>
+					<li>이용요금 : 600,000원</li>
+					<li>부가서비스 : 무료영화, 무료와이파이, 무료쿠폰, 무료 해외여행, 무료 항공권, 골프 회원권</li>
+					<li>제공통신사 : KT, LG, SK</li>
+					<li>약정기간 : 10년</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+	<script type="text/javascript" src="../resources/js/jquery/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$('.box .content h3 button').click(function () {
+                $('.box .content').removeClass('highlight');
+                // 아이디를 기반으로 조상 엘리먼트를 제어하기
+                // var itemNo = $(this).data('item-no');
+                // $('.box .content#item-' + itemNo).addClass('highlight');
+
+                // parent() 부모엘리먼트 검색 메소드를 사용해서 조상 엘리먼트 제어하기
+                // $(this).parent().parent().addClass('highlight');
+
+                // parents() 조상엘리먼트 검색 머소드를 사용해서 지정된 선택자표현식에
+                // 해당하는 조상엘리먼트 제어하기
+                //$(this).parents('.content').addClass('highlight');
+
+                // closest(선택자) 가장 가까운 조상엘리먼트 검색 메소드를 사용해서
+                // 지정된 선택자 표현식에 해당하는 조상엘리먼트를 제어하기
+                $(this).closest('div').addClass('highlight');
+            });
+		});
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
