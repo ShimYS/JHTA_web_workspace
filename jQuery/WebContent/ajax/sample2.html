@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>ajax - json 데이터 처리</h1>
+	
+	
+	
+	
+	
+	<script type="text/javascript" src="../resources/js/jquery/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript">
+		// json으로 내려오는 데이터는 자동으로 JSON.parce()해서 자바스크립트 객체로 내려온다.
+		$.get("server/sample2.jsp", function(person){
+			console.log(person.name);
+			console.log(person.email);
+			console.log(person.famaily[0], person.famaily[1], person.famaily[2]);
+			console.log(person.married);
+			console.log(person.age);
+			console.log(person.tel);
+		});
+	</script>
+</body>
+</html>

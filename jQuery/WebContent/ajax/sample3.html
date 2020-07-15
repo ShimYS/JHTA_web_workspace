@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>ajax - xml 데이터 처리</h1>
+	
+	
+	
+	
+	<script type="text/javascript" src="../resources/js/jquery/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript">
+		/*
+			xml객체와 html객체는 동일한 객체이다.
+			jQuery에서 ajax로 xml 데이터를 받아오면 Documnet 형식이다.
+			html에서 사용했던 방법데로 xml데이터도 다뤄주면 된다.
+		*/
+		$.get("server/sample3.jsp", function(bookXmlDoc){
+			var title = $(bookXmlDoc).find('title').text();
+			var writer = $(bookXmlDoc).find('writer').text();
+			var publisher = $(bookXmlDoc).find('publisher').text();
+			var price = $(bookXmlDoc).find('price').text();
+			var pubdate = $(bookXmlDoc).find('pubdate').text();
+			
+			console.log(title);
+			console.log(writer);
+			console.log(publisher);
+			console.log(price);
+			console.log(pubdate);
+		});
+	</script>
+</body>
+</html>

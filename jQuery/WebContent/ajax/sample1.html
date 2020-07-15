@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>ajax - 데이터 처리</h1>
+	
+	
+	<script type="text/javascript" src="../resources/js/jquery/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript">
+		$.get("server/sample1.jsp", function(names){
+			console.log($(names).each().text);
+		});
+		/*
+		-- 내부로직
+		function get(url, fn){
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == 4 && xhr.status == 200) {
+					var data = xhr.responseText;
+					fn(data);
+				}
+			}
+			xhr.open("GET", ur;);
+			xhr.send();
+		}
+		
+		-- jQuery에서의 ajax사용법
+		get('server/sample1.jsp', function(names) {...})
+		*/
+	</script>
+</body>
+</html>
