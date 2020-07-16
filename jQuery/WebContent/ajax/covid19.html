@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>코로나 19 시/도별 발생 현황</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-9 mt-3">
+            <h1>코로나 19 시/도별 발생 현황</h1>
+        </div>
+        <div class="col-3">
+        	<form class="form-inline mt-4">
+        		<input type="date" class="form-control" id="search-date">
+        		<button type="button" class="btn btn-primary btn-sm ml-3" id="btn-search">search</button>
+        	</form>
+        </div>
+    </div>
+    
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <table class="table table-sm text-center table-hover table-striped table-dark" id="covid19-table">
+                <thead style="font-weight: bold; font-size: 20px;" >
+                    <tr>
+                        <th>구분</th>
+                        <th>총 확진자 수</th>
+                        <th>총 사망자 수</th>
+                        <th>신규 확진자 수</th>
+                        <th>지역내 감염</th>
+                        <th>해외유입</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript"> 
+$(function () {
+    
+    function refreshTable() {
+    	
+        var reqParam = {
+            pageNo: 1,
+            startCreateDt: getSearchDate(),
+            endCreateDt: getSearchDate()
+        }
+		
+        var $tbody = $("#covid19-table tbody").empty();    
+        
+        // /jQuery/covid19sidp?pageNo=1&startCreateDt=20200716&endCreateDt=20200716
+        $.get("/jQuery/covid19sido", reqParam, function (xmlDoc) {
+       		console.log(xmlDoc);
+            
+        	var items = $(xmlDoc).find("item");
+        	for(var index in items){
+        		
+        		var $item = $(items[index]);
+        		
+        		var gubun = $item.find("gubun").text(); 			// 시도, 검역, 합계
+        		var defCnt = $item.find("defCnt").text();			// 총 확진자 수
+        		var deathCnt = $item.find("deathCnt").text();		// 총 사망자 수
+        		var incDec = $item.find("incDec").text();			// 신규 확진자 수
+        		var localOccCnt = $item.find("localOccCnt").text();	// 지역내 신규 확진자수
+        		var overFlowCnt = $item.find("overFlowCnt").text();	// 해외유입 확진자수
+        		
+        		
+       			var tr = "<tr>";
+       			tr += "<td>"+gubun+"</td>";
+       			tr += "<td>"+defCnt+"</td>";
+       			tr += "<td>"+deathCnt+"</td>";
+       			tr += "<td>"+incDec+"</td>";
+       			tr += "<td>"+localOccCnt+"</td>";
+       			tr += "<td>"+overFlowCnt+"</td>";
+       			tr += "</tr>";
+       			
+       			$tbody.append(tr);
+        		
+        		
+        		if(gubun == "합계"){
+        			break;
+        		}
+        	}
+        	
+        }, "xml");
+    }
+    
+    $("#btn-search").click(function () {
+    		console.log($("#search-date").val());
+		if($("#search-date").val() == ""){
+			alert("날짜를 선택하세요");
+			return;
+		}
+    	refreshTable();
+	});
+    
+    function getSearchDate() {
+		var searchDate = $("#search-date").val();
+		
+		if(searchDate == ""){
+			var dateObj = getDate();	// {date:"2020-07-16", searchDate:"20200716"}
+			
+			$("#search-date").val(dateObj.date);
+			return dateObj.searchDate;
+		} else {
+			// '-'를 전부 삭제
+			return searchDate.replace(/-/g, '');		
+		}
+		
+	}
+    
+    function getDate() {
+    	var now = new Date();
+		var year = now.getFullYear();
+		var month = now.getMonth() + 1;
+		var day = now.getDate();
+		
+		var date = year + "-" + (month < 10 ? "0"+month : month)+ "-" + (day<10 ? "0"+day : day);
+		var searchDate = date.replace(/-/g, '');
+		
+		return {
+			"date" : date,
+			"searchDate": searchDate
+		}
+	}
+    
+    refreshTable();
+})
+</script>
+</body>
+</html>
