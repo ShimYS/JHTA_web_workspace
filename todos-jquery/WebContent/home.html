@@ -296,7 +296,7 @@ $(function() {
 					tr += "<td>"+todo.title+"</td>";
 					tr += "<td>"+todo.status+"</td>";
 					tr += "<td>"+todo.day+"</td>";
-					tr += "<td><button type='button' class='btn btn-info btn-sm' data-todo-no="+todo.no+">상세정보</button></td>";
+					tr += "<td><button type='button' class='btn btn-info btn-sm' data-todo-no="+todo.no+" id='btn-todo-detail-show'>상세정보</button></td>";
 					tr += "</tr>";
 					
 					
@@ -307,12 +307,12 @@ $(function() {
 		});
 		return false;
 	});
+
+	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	// Todo 상세정보표시	
 	$("#table-my-todos-tbody").on("click","button",function(){
-		
-		
-		$("#modal-todo-detail").show();
+		$("#modal-todo-detail").modal("show");
 		
 		var reqParam = {
 			todono: $(this).data("todo-no")
@@ -322,45 +322,34 @@ $(function() {
 		
 		$.get("todo.hta", reqParam, function(jsonObj) {
 			
-			$.each(jsonObj.todo, function(index, todo) {
-				var tr = "<tr>";
-				tr += "<th>제목</th>";
-				tr += "<td colspan='3'>"+todo.title+"</td>";
-				tr += "</tr>";
-				
-				tr += "<tr>";
-				tr += "<th>작성자</th>"
-				
-				tr += "</tr>";
-				
-				
-				$("#table-my-todos").append(tr);
-				
-				/////////////////////여기서부터 tr집어넣어라////////////////////////
-				<tr>
-					<th>제목</th>
-					<td colspan="3">프로젝트 일정 회의</td>
-				</tr>
-				<tr>
-					<th>작성자</th>
-					<td>홍길동</td>
-					<th>등록일</th>
-					<td>2020-06-12</td>
-				</tr>
-				<tr>
-					<th>상태</th>
-					<td>처리예정</td>
-					<th>예정일</th>
-					<td>2020-07-12</td>
-				</tr>
-				<tr>
-					<th style="vertical-align: middle;">내용</th>
-					<td colspan="3"><small>내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 </small></td>
-				</tr>
-				///////////////////////////////////////////
-				
-				
-			});
+			var todo = jsonObj.todo;
+			
+			var tr = "<tr>";
+			tr += "<th>제목</th>";
+			tr += "<td colspan='3'>"+todo.title+"</td>";
+			tr += "</tr>";
+			
+			tr += "<tr>";
+			tr += "<th>작성자</th>";
+			tr += "<td>"+todo.userId+"</td>";
+			tr += "<th>등록일</th>";
+			tr += "<td>"+todo.createdDate+"</td>";
+			tr += "</tr>";
+			
+			tr += "<tr>";
+			tr += "<th>상태</th>";
+			tr += "<td>"+todo.status+"</td>";
+			tr += "<th>예정일</th>";
+			tr += "<td>"+todo.day+"</td>";
+			tr += "</tr>";
+			
+			tr += "<tr>";
+			tr += "<th style='vertical-align: middle;'>내용</th>";
+			tr += "<td colspan='3'><small>"+todo.content+"</small></td>";
+			tr += "</tr>";
+						
+			$("#table-todo-detail-tbody").append(tr);						
+			
 			
 			
 		});
