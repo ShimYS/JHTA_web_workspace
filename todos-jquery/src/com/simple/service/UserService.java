@@ -18,7 +18,6 @@ public class UserService {
 		if(savedUser != null) {
 			throw new Exception("아이디 중복");
 		}
-		
 		userDao.insertUser(user);
 	}
 	

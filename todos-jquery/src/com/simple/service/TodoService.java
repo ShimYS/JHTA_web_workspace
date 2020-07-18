@@ -65,16 +65,15 @@ public class TodoService {
 	 * @return 변경된 일정정보
 	 * @throws Exception
 	 */
-	public Todo updateTodo(Todo todo) throws Exception{
+	public Todo updateTodo(Todo todo) throws Exception {
 		Todo savedTodo = todoDao.getTodoByNo(todo.getNo());
 		
 		savedTodo.setTitle(todo.getTitle());
 		savedTodo.setContent(todo.getContent());
 		savedTodo.setDay(todo.getDay());
-		savedTodo.setCompletedDay(todo.getCompletedDay());
 		savedTodo.setStatus(todo.getStatus());
 		
-		todoDao.updateTodo(todo);
+		todoDao.updateTodo(savedTodo);
 		
 		Todo updateTodo = todoDao.getTodoByNo(todo.getNo());
 		

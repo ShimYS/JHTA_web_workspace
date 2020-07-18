@@ -113,10 +113,12 @@
 	<div class="modal" id="modal-todo-detail">
 		<div class="modal-dialog modal-lg">
  			<div class="modal-content">
+ 			
    				<div class="modal-header">
      				<h4 class="modal-title">상세 정보</h4>
      				<button type="button" class="close" data-dismiss="modal">&times;</button>
    				</div>
+   				
    				<div class="modal-body">
      				<div class="row">
      					<div class="col-12">
@@ -153,6 +155,7 @@
      					</div>
      				</div>
    				</div>
+   				
    				<div class="modal-footer">
      				<button type="button" class="btn btn-success btn-sm"   id="btn-completed-todo">처리완료</button>
      				<button type="button" class="btn btn-info btn-sm"      id="btn-running-todo">처리중</button>
@@ -160,6 +163,7 @@
      				<button type="button" class="btn btn-danger btn-sm"    id="btn-del-todo">삭제</button>
      				<button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">닫기</button>
    				</div>
+   				
  			</div>
 		</div>
 	</div>
@@ -294,7 +298,7 @@ $(function() {
 				$.each(res.todos, function(index, todo) {
 					var tr = "<tr>";
 					tr += "<td>"+todo.title+"</td>";
-					tr += "<td>"+todo.status+"</td>";
+					tr += "<td>"+statusToKor(todo.status)+"</td>";
 					tr += "<td>"+todo.day+"</td>";
 					tr += "<td><button type='button' class='btn btn-info btn-sm' data-todo-no="+todo.no+" id='btn-todo-detail-show'>상세정보</button></td>";
 					tr += "</tr>";
@@ -309,21 +313,26 @@ $(function() {
 	});
 
 	
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	// Todo 상세정보표시	
 	$("#table-my-todos-tbody").on("click","button",function(){
+		// todo 디테일 모달창 활성화
 		$("#modal-todo-detail").modal("show");
 		
+		// ajax를 위한 파라미터값 조회
 		var reqParam = {
 			todono: $(this).data("todo-no")
 		};
 		
+		// 데이터 넣기전에 비우기
 		$("#table-todo-detail-tbody").empty();
 		
+		// ajax로 데이터 가져오기
 		$.get("todo.hta", reqParam, function(jsonObj) {
 			
+			// 받은 json데이터에서 todo객체 조회해서 변수저장
 			var todo = jsonObj.todo;
 			
+			// 변수에 있는 데이터 html에 뿌려주기
 			var tr = "<tr>";
 			tr += "<th>제목</th>";
 			tr += "<td colspan='3'>"+todo.title+"</td>";
@@ -338,23 +347,19 @@ $(function() {
 			
 			tr += "<tr>";
 			tr += "<th>상태</th>";
-			tr += "<td>"+todo.status+"</td>";
+			tr += "<td>"+statusToKor(todo.status)+"</td>";
 			tr += "<th>예정일</th>";
 			tr += "<td>"+todo.day+"</td>";
 			tr += "</tr>";
 			
 			tr += "<tr>";
 			tr += "<th style='vertical-align: middle;'>내용</th>";
-			tr += "<td colspan='3'><small>"+todo.content+"</small></td>";
+			tr += "<td colspan='3'><small id='todono-"+todo.no+"' >"+todo.content+"</small></td>";
 			tr += "</tr>";
 						
-			$("#table-todo-detail-tbody").append(tr);						
-			
-			
-			
+			$("#table-todo-detail-tbody").append(tr);								
 		});
 	});
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	
 	// 회원가입 모달창 표시하기
 	$("#link-register").click(function() {
@@ -477,9 +482,106 @@ $(function() {
 		});
 	});
 	
-	//function clearInputField() {
-	//	$(".input").clear();
-	//}
+	// Todo status 변경
+	$("#modal-todo-detail .modal-footer").click(function (event) {
+		
+		// 닫기버튼 클릭하면 모달창 닫기
+		if(!$(event.target).attr("id")){
+			$("#modal-todo-detail").modal("hide");
+			return false;
+		}
+		
+		// 상태버튼 누르면 데이터 조회
+		var reqParam = {
+			status:$(event.target).attr("id").split("-")[1],
+			title:$("#table-todo-detail-tbody tr:first-child  td").text(),
+			no:$("#table-todo-detail-tbody tr:last-child  small").attr("id").split("-")[1],
+			content:$("#table-todo-detail-tbody tr:last-child  td").text(),
+			day:$("#table-todo-detail-tbody tr:nth-child(3)  td:last-child").text()
+		}
+		
+		console.log(reqParam);
+		
+		$.post("modifyTodo.hta", reqParam, function(jsonObj) {
+			
+			// 리스트 리셋으로 수정된값 보여주기
+			$("#link-my-todos").trigger("click");
+			
+			// 모달 상세정보 초기화
+			$("#table-todo-detail-tbody").empty();
+			
+			// 모달 상세정보 데이터 넣어주기
+			// 받은 json데이터에서 todo객체 조회해서 변수저장
+			var todo = jsonObj.todo;
+			console.log(todo);
+			
+			// 변수에 있는 데이터 html에 뿌려주기
+			var tr = "<tr>";
+			tr += "<th>제목</th>";
+			tr += "<td colspan='3'>"+todo.title+"</td>";
+			tr += "</tr>";
+			
+			tr += "<tr>";
+			tr += "<th>작성자</th>";
+			tr += "<td>"+todo.userId+"</td>";
+			tr += "<th>등록일</th>";
+			tr += "<td>"+todo.createdDate+"</td>";
+			tr += "</tr>";
+			
+			tr += "<tr>";
+			tr += "<th>상태</th>";
+			tr += "<td>"+statusToKor(todo.status)+"</td>";
+			tr += "<th>예정일</th>";
+			tr += "<td>"+todo.day+"</td>";
+			tr += "</tr>";
+			
+			tr += "<tr>";
+			tr += "<th style='vertical-align: middle;'>내용</th>";
+			tr += "<td colspan='3'><small id='todono-"+todo.no+"' >"+todo.content+"</small></td>";
+			tr += "</tr>";
+						
+			$("#table-todo-detail-tbody").append(tr);			
+		});
+		
+		
+	});
+	
+	// todo 상태 한글화
+	function statusToKor(status) {
+		if(status == "completed"){
+			return "처리완료";
+		} else if(status == "running"){
+			return "처리중";
+		} else if(status == "wait"){
+			return "보류";
+		} else if(status == "del"){
+			return "삭제";
+		} else {
+			return "처리예정";
+		}
+	};
+	
+	
+	// completed trigger 함수 만들기
+	
+	
+	
+	// 오늘 날짜 구하기
+	function getDate() {
+    	var now = new Date();
+		var year = now.getFullYear();
+		var month = now.getMonth() + 1;
+		var day = now.getDate();
+		
+		var date = year + "-" + (month < 10 ? "0"+month : month)+ "-" + (day<10 ? "0"+day : day);
+		var searchDate = date.replace(/-/g, '');
+		
+		return {
+			"date" : date,
+			"searchDate": searchDate
+		}
+	}
+	
 })
 </script>
 </body>

@@ -249,17 +249,15 @@ public class TodoController {
 		mav.addAttribute("data", dataMap);
 		
 		try {
-			int no = NumberUtil.stringToInt(req.getParameter("no"));
+			int no = NumberUtil.stringToInt(req.getParameter("no"));			
 			String title = req.getParameter("title");
 			String content = req.getParameter("content");
 			String dayString = req.getParameter("day");
 			String status = req.getParameter("status");
 			
-			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date day = transFormat.parse(dayString);
 			
-			HttpSession session = req.getSession();
-			User user = (User)session.getAttribute("loginUser");
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date day = transFormat.parse(dayString);
 			
 			Todo todo = new Todo();
 			todo.setNo(no);
@@ -267,12 +265,11 @@ public class TodoController {
 			todo.setContent(content);
 			todo.setDay(day);
 			todo.setStatus(status);
-			todo.setUserId(user.getId());
-			
+
 			Todo updateTodo = todoService.updateTodo(todo);
 			
 			dataMap.put("status", "success");
-			dataMap.put("data", updateTodo);
+			dataMap.put("todo", updateTodo);
 		} catch (Exception e) {
 			dataMap.put("status", "fail");
 			dataMap.put("message", e);

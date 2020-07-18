@@ -1,7 +1,6 @@
 package com.simple.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -130,12 +129,10 @@ public class TodoDao {
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("todo.updateTodo"));
 		pstmt.setString(1, todo.getTitle());
 		pstmt.setString(2, todo.getContent());
-		pstmt.setDate(3, (Date)todo.getDay());
-		pstmt.setDate(4, (Date)todo.getCompletedDay());
-		pstmt.setString(5, todo.getStatus());
-		pstmt.setInt(6, todo.getNo());
+		pstmt.setDate(3, new java.sql.Date(todo.getDay().getTime()));
+		pstmt.setString(4, todo.getStatus());
+		pstmt.setInt(5, todo.getNo());
 		pstmt.executeUpdate();
-		
 		pstmt.close();
 		connection.close();
 	}
