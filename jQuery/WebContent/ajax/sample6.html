@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+<script type="text/javascript" src="../resources/js/jquery/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			$.ajax({
+				type: "GET",
+				url: "http://192.168.10.65/jquery/ajax/server/sample6.jsp",
+				data: {cat:'book', type:'new'},
+				
+				//dataType: 'json', //요청과 응답쪽의 origin이 다를경우 json으로 값을 받아올 수 없다.
+				dataType: 'jsonp', //jsonp라는 방식으로 요청을 하면 내가 보낸건 이외에 callback 파라미터가 추가로 보내진다.
+				success: function (result) {
+					console.log(result);
+				}
+			})
+		})
+	</script>
+	
+	
+</body>
+</html>
